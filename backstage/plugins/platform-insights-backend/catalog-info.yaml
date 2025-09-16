@@ -1,0 +1,97 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: platform-insights-backend
+  description: A Backstage backend plugin that provides Kubernetes deployment insights and monitoring capabilities
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+    kubernetes.io/api-version: v1
+  tags:
+    - backend
+    - plugin
+    - kubernetes
+spec:
+  type: service
+  owner: john.doe@example.com
+  lifecycle: experimental
+  system: backstage
+  dependsOn:
+    - component:backstage
+  providesApis:
+    - platform-insights-api
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: platform-insights-api
+  description: API for Kubernetes deployment insights and monitoring
+  annotations:
+    backstage.io/definition-at-location: url:file:./openapi.yaml
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: platform-team
+  system: backstage
+  definition: |
+    openapi: 3.0.0
+    info:
+      title: Platform Insights API
+      version: 1.0.0
+      description: API for Kubernetes deployment insights and monitoring
+    servers:
+      - url: http://localhost:7007/api/platform-insights
+        description: Backstage platform-insights API server
+    paths:
+      /healthz:
+        get:
+          summary: Health check endpoint
+          description: Returns the health status of the platform insights service
+          responses:
+            '200':
+              description: Service is healthy
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: "ok"
+      /v1/summary:
+        get:
+          summary: Get deployment summary
+          description: Returns a summary of all Kubernetes deployments across namespaces
+          responses:
+            '200':
+              description: Deployment summary by namespace
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            description: Deployment name
+                          replicas:
+                            type: integer
+                            description: Desired number of replicas
+                          availableReplicas:
+                            type: integer
+                            description: Number of available replicas
+                          status:
+                            type: string
+                            enum: [healthy, degraded]
+                            description: Deployment health status
+            '500':
+              description: Failed to fetch deployments
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      error:
+                        type: string

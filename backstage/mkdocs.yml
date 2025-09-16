@@ -1,0 +1,6 @@
+site_name: Backstage Application
+site_description: Documentation for the Backstage Application
+nav:
+  - Home: index.md
+plugins:
+  - techdocs-core

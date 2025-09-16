@@ -1,0 +1,63 @@
+# Instructions directory
+/instructions/
+
+# macOS
+.DS_Store
+
+# IntelliJ IDEA files
+.idea/
+
+# Backstage-specific ignores
+# Logs
+backstage/logs
+backstage/*.log
+backstage/npm-debug.log*
+backstage/yarn-debug.log*
+backstage/yarn-error.log*
+
+# Coverage directory generated when running tests with coverage
+backstage/coverage
+
+# Dependencies
+backstage/node_modules/
+
+# Yarn files
+backstage/.pnp.*
+backstage/.yarn/*
+!backstage/.yarn/patches
+!backstage/.yarn/plugins
+!backstage/.yarn/releases
+!backstage/.yarn/sdks
+!backstage/.yarn/versions
+
+# Node version directives
+backstage/.nvmrc
+
+# dotenv environment variables file
+backstage/.env
+backstage/.env.test
+
+# Build output
+dist
+dist-types
+
+# Temporary change files created by Vim
+backstage/*.swp
+
+# MkDocs build output
+backstage/site
+
+# Local configuration files
+backstage/*.local.yaml
+
+# Sensitive credentials
+backstage/*-credentials.yaml
+
+# vscode database functionality support files
+backstage/*.session.sql
+
+# E2E test reports
+backstage/e2e-test-report/
+
+# Cache
+backstage/.cache/
